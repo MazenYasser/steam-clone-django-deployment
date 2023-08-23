@@ -1,0 +1,33 @@
+databases:
+  - name: steam-clone-db-django-render
+    databaseName: steam_clone_django_render
+    user: steam_clone_django_render_user
+
+services:
+  - type: web
+    name: steam-clone-django
+    runtime: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn steam_clone_django.wsgi"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: steam-clone-db-django-render
+          property: postgres://steam_clone_django_render_user:h3X8dfgxxW2lID8udKwM8W8eXIAECKgl@dpg-cjiv7lvjbvhs73dq284g-a/steam_clone_django_render
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
+      - key: ALLOWED_HOSTS
+        value: steam-clone-django.onrender.com
+      - key: DEBUG
+        value: True
+      - key: EMAIL_FROM
+        value: mazenyasser225@gmail.com
+      - key: EMAIL_HOST_USER
+        value: mazenyasser225@gmail.com
+      - key: EMAIL_HOST_PASSWORD
+        value: vmqqzylyfaphyqfu
+      - key: PAYPAL_TEST
+        value: true
+      
