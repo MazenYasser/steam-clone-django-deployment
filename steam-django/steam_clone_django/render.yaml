@@ -30,4 +30,7 @@ services:
         value: vmqqzylyfaphyqfu
       - key: PAYPAL_TEST
         value: true
-      
+static:
+  - source: static
+    target: /static
+
