@@ -16,6 +16,8 @@ from pathlib import Path
 import mimetypes
 mimetypes.add_type("text/css", ".css", True)
 
+from django.conf import settings
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -143,6 +145,11 @@ USE_I18N = True
 
 USE_TZ = True
 
+if not settings.DEBUG:
+    STATIC_ROOT = os.path.join (BASE_DIR, 'staticfiles')
+    STATIC_URL = '/static/'
+    MEDIA_ROOT = os.path.join (BASE_DIR, 'media')
+    MEDIA_URL = '/media/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -152,7 +159,7 @@ STATIC_URL = 'static/'
 
 STATIC_ROOT= os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [ 
-    os.path.join(BASE_DIR, 'steam_clone_django/static'),
+    os.path.join(BASE_DIR, 'steam_clone_django/static/'),
 ]
 
 # Media files (Images, Videos)
@@ -170,6 +177,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 PAYPAL_RECEIVER_EMAIL = 'sb-mclg826189614@business.example.com'
 PAYPAL_TEST = os.environ.get('PAYPAL_TEST', 'False').lower() == 'true'
 PAYPAL_BUY_BUTTON_IMAGE = '/static/ImageData/paypalButton.png'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'pages:home'
